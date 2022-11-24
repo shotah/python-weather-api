@@ -51,7 +51,7 @@ build:
 
 PHONY: start
 start: build
-	sam local start-api
+	sam local start-api --env-vars env.json
 
 PHONY: integration
 integration: build

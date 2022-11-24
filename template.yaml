@@ -6,6 +6,17 @@ Globals:
   Function:
     Timeout: 300
 
+Parameters:
+  WEATHER_API_URL:
+    Type: String
+    Description: Weather API URL
+  WEATHER_API_APP:
+    Type: String
+    Description: Weather API APP ID
+  WEATHER_API_KEY:
+    Type: String
+    Description: Weather API APP KEY
+
 Resources:
   Function:
     Type: AWS::Serverless::Function
@@ -13,6 +24,11 @@ Resources:
       CodeUri: .
       Handler: src.index.handler
       Runtime: python3.9
+      Environment:
+        Variables:
+          WEATHER_API_URL: !Ref WEATHER_API_URL
+          WEATHER_API_APP: !Ref WEATHER_API_APP
+          WEATHER_API_KEY: !Ref WEATHER_API_KEY
       Architectures:
         - x86_64
       Events:
