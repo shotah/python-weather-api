@@ -52,7 +52,11 @@ def test_weather_route_no_json_response(client, requests_mock):
     resp = client.get(path)
     json_data = resp.json
     logger.info(json.dumps(json_data, indent=4, sort_keys=True))
-    assert json_data["47.58, 122.3"] == []
+    assert json_data["47.58, 122.3"][0]["status_code"] == 500
+    assert (
+        json_data["47.58, 122.3"][0]["error"]
+        == "Expecting value: line 1 column 1 (char 0)"
+    )
 
 
 def test_weather_route_remote_api_returns_not_200(client, requests_mock):
@@ -65,5 +69,4 @@ def test_weather_route_remote_api_returns_not_200(client, requests_mock):
     resp = client.get(path)
     json_data = resp.json
     logger.info(json.dumps(json_data, indent=4, sort_keys=True))
-    assert json_data["47.58, 122.3"] == []
-    assert False
+    assert json_data["47.58, 122.3"][0]["status_code"] == 400
