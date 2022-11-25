@@ -61,7 +61,7 @@ make start
 This is a basic curl command that can be run locally.
 
 ```bash
-curl 'http://127.0.0.1:3000/weather?latitude=47.58&longitude=122.30&days=3'
+curl 'http://127.0.0.1:3000/weather?latitude=47.58&longitude=-122.30&days=3'
 ```
 
 Here is an example response from the working service.
@@ -69,11 +69,11 @@ Here is an example response from the working service.
 ```bash
 StatusCode        : 200
 StatusDescription : OK
-Content           : {"47.58, 122.3":[{"24/11/2022":{"announcement":"Brr, it's cold.","high":17.5,"low":9.0,"weather":"Overcast skies"}},{"25/11/2022":{"announcement":"Brr, it's cold.","high":23.2,"low":4.2,"weather":"Lig...
+Content           : {"47.58, -122.3":[{"24/11/2022":{"announcement":"Brr, it's cold.","high":17.5,"low":9.0,"weather":"Overcast skies"}},{"25/11/2022":{"announcement":"Brr, it's cold.","high":23.2,"low":4.2,"weather":"Lig...
 RawContent        : ...
 ```
 
-### Using pregenerated Event Json files.
+### Using pregenerated Event Json files
 
 ---
 

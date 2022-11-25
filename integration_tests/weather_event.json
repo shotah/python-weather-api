@@ -1,7 +1,7 @@
 {
   "body": "{\"message\": \"hello world\"}",
-  "resource": "/weather?latitude=47.58&longitude=122.30&days=3",
-  "path": "/weather?latitude=47.58&longitude=122.30&days=3",
+  "resource": "/weather?latitude=47.58&longitude=-122.30&days=3",
+  "path": "/weather?latitude=47.58&longitude=-122.30&days=3",
   "httpMethod": "GET",
   "isBase64Encoded": false,
   "queryStringParameters": {
@@ -54,7 +54,7 @@
       "user": null
     },
     "path": "/prod/",
-    "resourcePath": "/weather?latitude=47.58&longitude=122.30&days=3",
+    "resourcePath": "/weather?latitude=47.58&longitude=-122.30&days=3",
     "httpMethod": "POST",
     "apiId": "1234567890",
     "protocol": "HTTP/1.1"

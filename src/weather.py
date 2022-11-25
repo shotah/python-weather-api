@@ -83,24 +83,6 @@ class Weather:
         Notes:
         lat, lon, and days come in here to increase performance and flexibility of the class.
         """
-        print(
-            {
-                "get_weather": {
-                    "latitude": latitude,
-                    "longitude": longitude,
-                    "days": days,
-                }
-            }
-        )
-        logger.info(
-            {
-                "get_weather": {
-                    "WEATHER_API_URL": self.WEATHER_API_URL,
-                    "WEATHER_API_APP": self.WEATHER_API_APP,
-                    "WEATHER_API_KEY": self.WEATHER_API_KEY,
-                }
-            }
-        )
         logger.info(
             {
                 "get_weather": {
