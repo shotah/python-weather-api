@@ -49,19 +49,19 @@ def weather_endpoint():
     }
     """
     # import and clean args
-    latitude = float(escape(request.args.get("latitude", "0")))
-    if not latitude:
-        return "Latitude not received", 400
-
-    longitude = float(escape(request.args.get("longitude", "0")))
-    if not longitude:
-        return "Longitude not received", 400
-
-    days = int(escape(request.args.get("days", "9999")))
+    try:
+        latitude = float(escape(request.args.get("latitude")))
+        longitude = float(escape(request.args.get("longitude")))
+        days = int(escape(request.args.get("days")))
+    except Exception:
+        return "Error: validating one of the following [Latitude, Longitude, Days]", 400
 
     # call weather and return response
-    response = weather.get_weather(latitude=latitude, longitude=longitude, days=days)
-    logger.info({"weather_endpoint response": response})
-    if f"{latitude}, {longitude}" in response:
+    try:
+        response = weather.get_weather(
+            latitude=latitude, longitude=longitude, days=days
+        )
+        logger.info({"weather_endpoint response": response})
         return jsonify(response)
-    return response["message"], response["status_code"]
+    except Exception as error:
+        return f"Error: {error}", 500
