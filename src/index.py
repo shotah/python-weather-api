@@ -27,7 +27,8 @@ def default_endpoint():
 @app.route("/weather", methods=["GET"])
 def weather_endpoint():
     """
-    EXAMPLE: curl 'http://127.0.0.1:3000/weather?latitude=47.58&longitude=-122.30&days=3'
+    EXAMPLE:
+        curl 'http://127.0.0.1:3000/weather?latitude=47.58&longitude=-122.30&days=3'
     PARAMS: {
         latitude: "47.58",
         longitude: "122.30",

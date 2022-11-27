@@ -7,8 +7,8 @@ name = "pypi"
 flask = "*"
 requests = "*"
 apig-wsgi = "*"
-aws-lambda-powertools = "*"
 jmespath = "*"
+aws-lambda-powertools = {extras = ["logger"], version = "*"}
 
 [dev-packages]
 pytest = "*"
@@ -18,13 +18,12 @@ isort = "*"
 black = "*"
 autopep8 = "*"
 requests-mock = {extras = ["fixture"], version = "*"}
-# TODO: aws powertools conflicts with flake8 why is this happening?
-# flake8 = "*"
-# Flake8-pyproject = "*"
-# flake8-annotations-complexity = "*"
-# flake8-expression-complexity = "*"
-# flake8-cognitive-complexity = "*"
-# flake8-adjustable-complexity = "*"
+flake8 = "*"
+Flake8-pyproject = "*"
+flake8-annotations-complexity = "*"
+flake8-expression-complexity = "*"
+flake8-cognitive-complexity = "*"
+flake8-adjustable-complexity = "*"
 
 [requires]
 python_version = "3.9"
