@@ -27,9 +27,9 @@ repos:
     rev: 22.10.0
     hooks:
       - id: black
-# -   repo: local
-#     hooks:
-#     -   id: flake8
-#         name: flake8
-#         language: system
-#         entry: pipenv run flake8
+-   repo: local
+    hooks:
+    -   id: flake8
+        name: flake8
+        language: system
+        entry: pipenv run flake8

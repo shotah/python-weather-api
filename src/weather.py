@@ -81,7 +81,8 @@ class Weather:
         Main method to call weather api to get back the raw weather data
 
         Notes:
-        lat, lon, and days come in here to increase performance and flexibility of the class.
+        lat, lon, and days come in here to increase performance and
+        flexibility of the class.
         """
         logger.info(
             {
@@ -117,7 +118,7 @@ class Weather:
             return {
                 f"{latitude}, {longitude}": [
                     {
-                        "message": f"Internal Service Error",
+                        "message": "Internal Service Error",
                         "error": f"{Error}",
                         "status_code": 500,
                     }
