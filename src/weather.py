@@ -84,15 +84,6 @@ class Weather:
         lat, lon, and days come in here to increase performance and
         flexibility of the class.
         """
-        logger.info(
-            {
-                "get_weather": {
-                    "latitude": latitude,
-                    "longitude": longitude,
-                    "days": days,
-                }
-            }
-        )
         try:
             url = f"{self.WEATHER_API_URL}/forecast/{latitude},{longitude}?"
             weather_response = requests.request(
@@ -100,17 +91,11 @@ class Weather:
             )
             logger.info({"get_weather": {"status_code": weather_response.status_code}})
             if not str(weather_response.status_code).startswith("20"):
-                return {
-                    "message": f"Unable to connect to {self.WEATHER_API_URL}",
-                    "status_code": weather_response.status_code,
-                }
+                raise ValueError(f"API Call: {weather_response.text}")
             return {
                 f"{latitude}, {longitude}": self.__format_weather(
                     data=weather_response.json(), days=days
                 )
             }
-        except Exception as Error:
-            return {
-                "message": f"Internal Service Error: {Error}",
-                "status_code": 500,
-            }
+        except Exception as error:
+            raise ValueError(f"get_weather: {error}")

@@ -58,9 +58,7 @@ def test_weather_route_no_json_response(client, requests_mock):
     logger.info({"path": path})
     resp = client.get(path)
     logger.info(resp.text)
-    assert (
-        resp.text == "Internal Service Error: Expecting value: line 1 column 1 (char 0)"
-    )
+    assert resp.text == "Error: get_weather: Expecting value: line 1 column 1 (char 0)"
     assert resp.status_code == 500
 
 
@@ -69,14 +67,14 @@ def test_weather_route_remote_api_returns_not_200(client, requests_mock):
     Tests weather route with fake data set and checks for correct response
     """
     matcher = re.compile("http://api.weatherunlocked.com/api/.*")
-    requests_mock.get(matcher, status_code=400)
+    requests_mock.get(matcher, text="Invalid app token or key", status_code=400)
     params = {"latitude": "47.58", "longitude": "-122.30", "days": "3"}
     path = "/weather?" + parse.urlencode(params)
     logger.info({"path": path})
     resp = client.get(path)
     logger.info(resp.text)
-    assert resp.text == "Unable to connect to http://api.weatherunlocked.com/api"
-    assert resp.status_code == 400
+    assert resp.text == "Error: get_weather: API Call: Invalid app token or key"
+    assert resp.status_code == 500
 
 
 def test_weather_route_remote_api_returns_with_no_days(client, requests_mock):
@@ -87,9 +85,12 @@ def test_weather_route_remote_api_returns_with_no_days(client, requests_mock):
     path = "/weather?" + parse.urlencode(params)
     logger.info({"path": path})
     resp = client.get(path)
-    json_data = resp.json
-    logger.info(json.dumps(json_data, indent=4, sort_keys=True))
-    assert len(json_data["47.58, -122.3"]) == 7
+    logger.info(resp.text)
+    assert resp.status_code == 400
+    assert (
+        resp.text
+        == "Error: validating one of the following [Latitude, Longitude, Days]"
+    )
 
 
 def test_weather_route_remote_api_returns_with_no_lat(client, requests_mock):
@@ -102,7 +103,10 @@ def test_weather_route_remote_api_returns_with_no_lat(client, requests_mock):
     resp = client.get(path)
     logger.info(resp.text)
     assert resp.status_code == 400
-    assert resp.text == "Latitude not received"
+    assert (
+        resp.text
+        == "Error: validating one of the following [Latitude, Longitude, Days]"
+    )
 
 
 def test_weather_route_remote_api_returns_with_no_lon(client, requests_mock):
@@ -115,4 +119,7 @@ def test_weather_route_remote_api_returns_with_no_lon(client, requests_mock):
     resp = client.get(path)
     logger.info(resp.text)
     assert resp.status_code == 400
-    assert resp.text == "Longitude not received"
+    assert (
+        resp.text
+        == "Error: validating one of the following [Latitude, Longitude, Days]"
+    )
