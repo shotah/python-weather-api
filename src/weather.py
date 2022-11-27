@@ -14,7 +14,7 @@ class Weather:
     WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
     WEATHER_PARAMS = {"app_id": WEATHER_API_APP, "app_key": WEATHER_API_KEY}
 
-    def __get_vars(self) -> None:
+    def __init__(self) -> None:
         """
         Vars will be coming from AWS Environmental Vars when in AWS,
         Using this as a stop gap so we don't have to maintain .env AND env.json files.
@@ -94,7 +94,6 @@ class Weather:
             }
         )
         try:
-            self.__get_vars()
             url = f"{self.WEATHER_API_URL}/forecast/{latitude},{longitude}?"
             weather_response = requests.request(
                 method="GET", url=url, params=self.WEATHER_PARAMS
@@ -102,12 +101,8 @@ class Weather:
             logger.info({"get_weather": {"status_code": weather_response.status_code}})
             if not str(weather_response.status_code).startswith("20"):
                 return {
-                    f"{latitude}, {longitude}": [
-                        {
-                            "message": f"Unable to connect to {self.WEATHER_API_URL}",
-                            "status_code": weather_response.status_code,
-                        }
-                    ]
+                    "message": f"Unable to connect to {self.WEATHER_API_URL}",
+                    "status_code": weather_response.status_code,
                 }
             return {
                 f"{latitude}, {longitude}": self.__format_weather(
@@ -116,11 +111,6 @@ class Weather:
             }
         except Exception as Error:
             return {
-                f"{latitude}, {longitude}": [
-                    {
-                        "message": "Internal Service Error",
-                        "error": f"{Error}",
-                        "status_code": 500,
-                    }
-                ]
+                "message": f"Internal Service Error: {Error}",
+                "status_code": 500,
             }
