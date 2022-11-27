@@ -49,11 +49,19 @@ def weather_endpoint():
     }
     """
     # import and clean args
-    latitude = float(escape(request.args.get("latitude")))
-    longitude = float(escape(request.args.get("longitude")))
-    days = int(escape(request.args.get("days")))
+    latitude = float(escape(request.args.get("latitude", "0")))
+    if not latitude:
+        return "Latitude not received", 400
+
+    longitude = float(escape(request.args.get("longitude", "0")))
+    if not longitude:
+        return "Longitude not received", 400
+
+    days = int(escape(request.args.get("days", "9999")))
 
     # call weather and return response
     response = weather.get_weather(latitude=latitude, longitude=longitude, days=days)
-    logger.info({"weather_endpoint": response})
-    return jsonify(response)
+    logger.info({"weather_endpoint response": response})
+    if f"{latitude}, {longitude}" in response:
+        return jsonify(response)
+    return response["message"], response["status_code"]

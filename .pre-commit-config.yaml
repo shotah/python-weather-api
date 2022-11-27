@@ -33,3 +33,11 @@ repos:
         name: flake8
         language: system
         entry: pipenv run flake8
+-   repo: local
+    hooks:
+    -   id: pytest
+        name: pytest
+        language: system
+        entry: pipenv run pytest
+        pass_filenames: false
+        always_run: true
